@@ -7,9 +7,12 @@ import {
   Param,
   Patch,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from "@nestjs/common";
 import { BlogService } from "./blog.service";
 import { BlogDocument } from "./blog.schema";
+import { BlogDto } from "./dto/blog.dto";
 
 @Controller("blog")
 export class BlogController {
@@ -23,7 +26,8 @@ export class BlogController {
 
   @HttpCode(201)
   @Post()
-  async create(@Body() data: BlogDocument) {
+  @UsePipes(new ValidationPipe({}))
+  async create(@Body() data: BlogDto) {
     return this.blogService.createBlog(data);
   }
 

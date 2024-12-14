@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Blog, BlogDocument } from "./blog.schema";
 import { Model } from "mongoose";
+import { BlogDto } from "./dto/blog.dto";
 
 @Injectable()
 export class BlogService {
@@ -11,7 +12,7 @@ export class BlogService {
     return this.blogModel.find();
   }
 
-  async createBlog(data: BlogDocument) {
+  async createBlog(data: BlogDto) {
     return this.blogModel.create(data);
   }
 
