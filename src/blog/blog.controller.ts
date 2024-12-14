@@ -8,8 +8,8 @@ import {
   Patch,
   Post,
 } from "@nestjs/common";
-import { BlogDto } from "./dto/blog.dto";
 import { BlogService } from "./blog.service";
+import { BlogDocument } from "./blog.schema";
 
 @Controller("blog")
 export class BlogController {
@@ -17,31 +17,31 @@ export class BlogController {
 
   @HttpCode(200)
   @Get()
-  async getAll(): Promise<BlogDto[]> {
+  async getAll(): Promise<BlogDocument[]> {
     return this.blogService.getAllBlogs();
   }
 
   @HttpCode(201)
   @Post()
-  async create(@Body() dto: Omit<BlogDto, "id">) {
-    return this.blogService.createBlog(dto);
+  async create(@Body() data: BlogDocument) {
+    return this.blogService.createBlog(data);
   }
 
   @HttpCode(200)
   @Get(":id")
   async getById(@Param("id") id: string) {
-    return this.blogService.getById(+id);
+    return this.blogService.getById(id);
   }
 
   @HttpCode(201)
   @Patch(":id")
-  async updateById(@Param("id") id: string, @Body() dto: BlogDto) {
-    return this.blogService.updateById(+id, dto);
+  async updateById(@Param("id") id: string, @Body() data: BlogDocument) {
+    return this.blogService.updateById(id, data);
   }
 
   @HttpCode(200)
   @Delete(":id")
   async deleteById(@Param("id") id: string) {
-    return this.blogService.deleteById(+id);
+    return this.blogService.deleteById(id);
   }
 }
